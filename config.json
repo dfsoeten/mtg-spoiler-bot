@@ -2,5 +2,5 @@
   "domain": "http://mythicspoiler.com",
   "new-sets-url": "/newspoilers.html",
 
-  "output": true
+  "silent": false
 }

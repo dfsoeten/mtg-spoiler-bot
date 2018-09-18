@@ -11,7 +11,7 @@ class Sets:
     sets = []
 
     # Set icon path
-    set_icons_path = 'app/cache/set_icons/'
+    set_icons_path = 'app/cache/set_images/'
 
     # Get sets from source
     def __init__(self):
@@ -31,8 +31,8 @@ class Sets:
                         open(self.set_icons_path + set_name + '.png', 'wb')\
                             .write(requests.get(config['domain'] + '/' + set_name).content)
 
-                        if config['output']:
-                            print (colored('[CACHED] ' + set_name, 'yellow'))
+                        if not config['silent']:
+                            print (colored('[CACHED] ' + set_name, 'blue'))
 
     # Get sets
     def get_sets(self):
@@ -41,6 +41,10 @@ class Sets:
     # Get sets length
     def get_sets_len(self):
         return len(self.sets)
+
+    # Get the latest set
+    def get_first_set(self):
+        return self.sets[0]
 
 
 
