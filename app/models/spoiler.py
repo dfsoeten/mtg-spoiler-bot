@@ -1,13 +1,17 @@
 import requests
 import json
 import os.path
+from set import Set
 from termcolor import colored
 from bs4 import BeautifulSoup
 
 
-class Sets:
+class Spoiler:
 
-    # Set names
+    # Set urls
+    set_urls = []
+
+    # Sets
     sets = []
 
     # Set icon path
@@ -24,7 +28,7 @@ class Sets:
 
                 if len(set_name) < 5:
                     # Map set names
-                    self.sets.append(set_name)
+                    self.set_urls.append(set_name)
 
                     # Save set icons to cache if it doesn't exist
                     if not os.path.isfile(self.set_icons_path + set_name + '.png'):
@@ -36,7 +40,9 @@ class Sets:
 
     # Get sets
     def get_sets(self):
-        return self.sets
+        if len(self.sets) != len(self.set_urls):
+            for i in range(len(self.sets), len(self.set_urls), 1):
+                self.sets.append(Set(self.set_urls[i]))
 
     # Get sets length
     def get_sets_len(self):
@@ -44,6 +50,9 @@ class Sets:
 
     # Get the latest set
     def get_first_set(self):
+        if not self.sets:
+            self.sets.append(Set(self.set_urls[0]))
+
         return self.sets[0]
 
 

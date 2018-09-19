@@ -1,5 +1,6 @@
 # coding=utf-8
 import os
+import re
 
 import requests
 import json
@@ -12,8 +13,6 @@ class Card:
     name = ''
 
     manacost = ''
-
-    cmc = 0
 
     set = ''
 
@@ -52,15 +51,15 @@ class Card:
             # Set card attributes
             self.name = card[0].text.strip()
             self.manacost = card[1].text.strip()
-            self.cmc = int(self.manacost[0]) + (len(self.manacost) - 1)
             self.set = set
             self.type = types[0]
-            self.sub_types = [types[1].split(' ')]
+            self.sub_types = types[1].split(' ')
             self.rules_text = card[3].text.strip()
             self.flavor = card[4].text.strip()
             self.artist = card[6].find('font').text.strip()
-            self.power = pwr_thg[0]
-            self.toughness = pwr_thg[1]
+            if len(pwr_thg) == 2:
+                self.power = pwr_thg[0]
+                self.toughness = pwr_thg[1]
             self.image_path = image_path
 
             # Get image
@@ -72,7 +71,7 @@ class Card:
                     print (colored('[CACHED] ' + self.get_image_filename() + '.jpg', 'blue'))
 
             if not config['silent']:
-                print(colored('[GET] ' + url, 'green'))
+                print(colored('[GET][CARD] ' + self.name, 'green'))
 
     def get_name(self):
         return self.name
@@ -84,7 +83,10 @@ class Card:
         return self.manacost
 
     def get_cmc(self):
-        return self.cmc
+        if bool(re.search(r'\d', self.manacost)):
+            return int(self.manacost[0]) + (len(self.manacost) - 1)
+        else:
+            return len(self.manacost)
 
     def get_type(self):
         return self.type

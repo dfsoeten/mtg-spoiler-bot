@@ -1,25 +1,16 @@
-from models.sets import Sets
-from models.cards import Cards
+from models.spoiler import Spoiler
+from views.card import Card
 
 
 class App:
 
     def __init__(self):
-        sets = Sets()
-        cards = Cards(sets.get_sets()[0])
+        spoiler = Spoiler()
+        card = Card()
 
-        # print(cards.get_cards()[0].get_name())
-        # print(cards.get_cards()[0].get_manacost())
-        # print(cards.get_cards()[0].get_cmc())
-        # print(cards.get_cards()[0].get_type())
-        # print(cards.get_cards()[0].get_sub_types())
-        # print(cards.get_cards()[0].get_rules_text())
-        # print(cards.get_cards()[0].get_flavor())
-        # print(cards.get_cards()[0].get_artist())
-        # print(cards.get_cards()[0].get_power())
-        # print(cards.get_cards()[0].get_toughness())
-        #
-        # print(cards.get_cards()[0].get_image_filename())
+        print(spoiler.get_first_set().get_name())
+        print(spoiler.get_first_set().get_first_card().get_name())
+        # card.pretty_print(spoiler.get_first_set().get_first_card())
 
     def start(self):
         pass

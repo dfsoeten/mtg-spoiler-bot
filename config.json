@@ -3,5 +3,8 @@
   "new-sets-url": "/newspoilers.html",
 
   "silent": false,
-  "debug": true
+  "debug": {
+    "is-enabled": true,
+    "card-index": 14
+  }
 }
