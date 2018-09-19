@@ -94,6 +94,14 @@ class Card:
     def get_sub_types(self):
         return self.sub_types
 
+    def get_sub_types_string(self):
+        result = ''
+
+        for sub_type in self.sub_types:
+            result += sub_type + ' '
+
+        return result
+
     def get_rules_text(self):
         return self.rules_text
 

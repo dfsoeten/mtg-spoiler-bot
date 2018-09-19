@@ -41,7 +41,7 @@ class Spoiler:
     # Get sets
     def get_sets(self):
         if len(self.sets) != len(self.set_urls):
-            for i in range(len(self.sets), len(self.set_urls), 1):
+            for i in range(len(self.sets), len(self.set_urls)):
                 self.sets.append(Set(self.set_urls[i]))
 
     # Get sets length

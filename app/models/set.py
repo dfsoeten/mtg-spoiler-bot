@@ -57,7 +57,7 @@ class Set:
     # Get cards
     def get_cards(self):
         if len(self.cards) != len(self.card_urls):
-            for i in range(len(self.cards), len(self.card_urls), 1):
+            for i in range(len(self.cards), len(self.card_urls)):
                 self.cards.append(Card(self.name, self.card_urls[i], self.cards_images_path))
 
         return self.cards

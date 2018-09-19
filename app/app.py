@@ -1,16 +1,13 @@
 from models.spoiler import Spoiler
-from views.card import Card
+from views.prettyCard import PrettyCard
 
 
 class App:
 
     def __init__(self):
         spoiler = Spoiler()
-        card = Card()
-
-        print(spoiler.get_first_set().get_name())
-        print(spoiler.get_first_set().get_first_card().get_name())
-        # card.pretty_print(spoiler.get_first_set().get_first_card())
+        card = PrettyCard(spoiler.get_first_set().get_first_card())
+        card.print_output()
 
     def start(self):
         pass
