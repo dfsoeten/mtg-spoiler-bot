@@ -1,12 +1,21 @@
-from models.spoiler import Spoiler
-from views.prettyCard import PrettyCard
+from .models.spoiler import Spoiler
+from .controllers.cache import Cache
+from .views.prettyCard import PrettyCard
 
 
 class App:
 
+    # Spoiler data
+    spoiler = Spoiler()
+
+    # Cache spoiler data
+    cache = Cache(spoiler)
+
     def __init__(self):
-        spoiler = Spoiler()
-        spoiler.get_first_set().get_cards()
+        card = PrettyCard(self.spoiler.get_first_set().get_first_card())
+        card.print_output()
 
     def start(self):
+        # When our program is done, cache everything
+        # self.cache.all()
         pass

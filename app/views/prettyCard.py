@@ -44,7 +44,7 @@ class PrettyCard:
         # End card text
 
         # Start card footer
-        if self.card.is_creature():
+        if self.card.get_type() == 'Creature':
             pwr_tgh = self.card.get_power() + '/' + self.card.get_toughness()
 
             if len(self.card.get_artist() + pwr_tgh) + 2 > self.card_width:
