@@ -20,7 +20,10 @@ class PrettyCard:
 
         # Start card title
         self.fill('+', '-')
-        self.fill_justify('|', [self.card.get_name(), self.card.get_manacost()])
+        if len(self.card.get_name() + self.card.get_manacost()) + 6 > self.card_width:
+            self.fill_justify('|', [self.card.get_name()[:(self.card_width - (len(self.card.get_manacost()) + 8))] + '..', self.card.get_manacost()])
+        else:
+            self.fill_justify('|', [self.card.get_name(), self.card.get_manacost()])
         self.fill('|', '-')
         # End Card title
 
@@ -48,7 +51,7 @@ class PrettyCard:
             pwr_tgh = str(self.card.get_power()) + '/' + str(self.card.get_toughness())
 
             if len(self.card.get_artist() + pwr_tgh) + 2 > self.card_width:
-                self.fill_justify('|', [self.card.get_artist()[:(self.card_width - (len(pwr_tgh) + 6))], pwr_tgh])
+                self.fill_justify('|', [self.card.get_artist()[:(self.card_width - (len(pwr_tgh) + 8))] + '..', pwr_tgh])
             else:
                 self.fill_justify('|', [self.card.get_artist(), pwr_tgh])
         else:

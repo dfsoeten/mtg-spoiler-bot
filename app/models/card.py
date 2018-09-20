@@ -28,8 +28,8 @@ class Card(Base):
 
     def __init__(self, c):
         Base.__init__(self)
-        self.url = c['url']
         self.name = c['name']
+        self.manacost = c['manacost']
         self.type = c['type']
         self.sub_types = c['sub_types']
         self.set = c['set']
