@@ -91,6 +91,9 @@ class Card:
     def get_type(self):
         return self.type
 
+    def is_creature(self):
+        return self.type == 'Creature'
+
     def get_sub_types(self):
         return self.sub_types
 

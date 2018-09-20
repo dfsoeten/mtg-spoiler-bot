@@ -8,25 +8,20 @@ class PrettyCard:
     # Card object
     card = None
 
+    # Card width
     card_width = 36
 
-    title_space = 0
-
+    # Output result
     output = ''
 
     def __init__(self, card):
         self.card = card
 
-        # Set space between card title and mana cost
-        self.title_space = (self.card_width - (4 + len(card.get_name() + card.get_manacost())))
-
     def get_output(self):
 
         # Start card title
         self.fill('+', '-')
-        self.output += '| ' + self.card.get_name()
-        self.fill_space(self.title_space)
-        self.output += self.card.get_manacost() + ' |\n'
+        self.fill_justify('|', [self.card.get_name(), self.card.get_manacost()])
         self.fill('|', '-')
         # End Card title
 
@@ -46,6 +41,22 @@ class PrettyCard:
             if len(line) > 0:
                 self.fill_remaining('|', line)
                 self.fill('|', ' ')
+        self.fill('|', '-')
+        # End card text
+
+        # Start card footer
+        if self.card.is_creature():
+            pwr_tgh = self.card.get_power() + '/' + self.card.get_toughness()
+
+            if len(self.card.get_artist() + pwr_tgh) + 2 > self.card_width:
+                self.fill_justify('|', [self.card.get_artist()[:(self.card_width - (len(pwr_tgh) + 6))], pwr_tgh])
+            else:
+                self.fill_justify('|', [self.card.get_artist(), pwr_tgh])
+        else:
+            self.fill_remaining('|', self.card.get_artist())
+
+        self.fill('+', '-')
+        # End Card footer
 
         return self.output
 
@@ -69,6 +80,11 @@ class PrettyCard:
     def fill_space(self, amount):
         for i in range(1, amount):
             self.output += ' '
+
+    def fill_justify(self, border, content):
+        self.output += border + ' '+ content[0]
+        self.fill_space((self.card_width - (4 + len(content[0] + content[1]))))
+        self.output += content[1] + ' ' + border + '\n'
 
     def fill_remaining(self, border, content):
         self.output += border + ' '
