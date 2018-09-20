@@ -1,4 +1,3 @@
-import sys
 import json
 from termcolor import colored
 
