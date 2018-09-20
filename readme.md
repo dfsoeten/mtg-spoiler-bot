@@ -2,7 +2,7 @@
 This nifty "little" python application will scrape the newest spoilers from [Mythic Spoiler](http://mythicspoiler.com/) 
 and caches the data into `.json` files. Images will be saved into aswell!
 
-In the future this application will be able to be linked with [Whatsapp web](https://web.whatsapp.com/) and atuomatically send the newest spoilers inside your groups app!
+In the future this application will be able to be linked with [Whatsapp web](https://web.whatsapp.com/) and atuomatically send the newest spoilers inside your playgroups groups app!
 
 ## Getting Started
 Clone this repo: `git clone https://github.com/iamdann/mtg-spoiler-bot.git`
