@@ -16,6 +16,4 @@ class App:
         card.print_output()
 
     def start(self):
-        # When our program is done, cache everything
-        # self.cache.all()
         pass

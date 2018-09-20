@@ -31,21 +31,36 @@ class Cache(Base):
         self.scraper = Scraper()
         self.read_cache()
 
-        # Get card data
+        # Cache set & card data
         for set in self.scraper.get_sets():
+
+            # Check if set exists, otherwise cache it
             if not self.has_set(set):
                 self.cache['sets'][set] = {}
 
+            # Populate set models
             self.spoiler.append_sets(Set(set))
 
-            for card in self.scraper.get_cards(set):
-                if not self.has_card(set, self.scraper.get_card_name(card)):
-                    self.cache['sets'][set][self.scraper.get_card_name(card)] = self.scraper.get_card(set, card)
+            set = self.spoiler.find_set(set)
+
+            # Check if set image exists, otherwise cache it
+            if not os.path.isfile(self.set_icons_path + set.get_name() + '.png'):
+                self.cache_set_images(set)
+
+            for card in self.scraper.get_cards(set.get_name()):
+                # Check if card exists, otherwise cache it
+                if not self.has_card(set.get_name(), self.scraper.get_card_name(card)):
+                    self.cache['sets'][set.get_name()][self.scraper.get_card_name(card)] = self.scraper.get_card(set.get_name(), card)
 
                     if not self.config['silent']:
-                        print(colored('[CACHED] ' + self.scraper.get_card_name(card), 'blue'))
+                        print(colored('[CACHED][CARD] ' + self.scraper.get_card_name(card), 'blue'))
 
-                self.spoiler.find_set(set).append_card(Card(self.cache['sets'][set][self.scraper.get_card_name(card)]))
+                card = Card(self.cache['sets'][set.get_name()][self.scraper.get_card_name(card)])
+                self.spoiler.find_set(set.get_name()).append_card(card)
+
+                # Check if card image exists, otherwise cache it
+                if not os.path.isfile(self.cards_images_path + card.get_image_filename() + '.jpg'):
+                    self.cache_card_images(card)
 
                 break
             break
@@ -74,40 +89,23 @@ class Cache(Base):
         with open('app/cache/cache.json', 'w+') as file:
             json.dump(self.cache, file, indent=2)
 
-    # Cache everything in memory
-    def all(self):
-        self.sets()
-        self.cards()
+    # Cache set images
+    def cache_set_images(self, set):
+        # Save set icons to cache if it doesn't exist
+        open(self.set_icons_path + set.get_name() + '.png', 'wb') \
+            .write(requests.get(self.config['domain'] + '/' + set.get_name()).content)
 
-    # Cache sets
-    def sets(self):
-        for set in self.spoiler.get_sets():
+        if not self.config['silent']:
+            print(colored('[CACHED][IMAGE] ' + set.get_name(), 'blue'))
 
-            # Save set icons to cache if it doesn't exist
-            if not os.path.isfile(self.set_icons_path + set.get_name() + '.png'):
-                open(self.set_icons_path + set.get_name() + '.png', 'wb') \
-                    .write(requests.get(self.config['domain'] + '/' + set.get_name()).content)
+    # Cache card images
+    def cache_card_images(self, card):
+        open(self.cards_images_path + card.get_image_filename() + '.jpg', 'wb') \
+            .write(requests.get(
+                self.config['domain'] + '/' + card.get_set() + '/cards/' + card.get_normalized_name() + '.jpg').content)
 
-                if not self.config['silent']:
-                    print(colored('[CACHED] ' + set.get_name(), 'blue'))
-
-            # Save set data
-
-    # Cache cards
-    def cards(self):
-
-        for set in self.spoiler.get_sets():
-            for card in set.get_cards():
-                # Save card images to cache if it doesn't exist
-                if not os.path.isfile(self.cards_images_path + card.get_image_filename() + '.jpg'):
-                    open(self.cards_images_path + card.get_image_filename() + '.jpg', 'wb') \
-                        .write(requests.get(
-                            self.config['domain'] + '/' + set + '/cards/' + card.get_normalized_name() + '.jpg').content)
-
-                    if not self.config['silent']:
-                        print(colored('[CACHED] ' + card.get_image_filename() + '.jpg', 'blue'))
-
-            # Save card data
+        if not self.config['silent']:
+            print(colored('[CACHED][IMAGE] ' + card.get_image_filename() + '.jpg', 'blue'))
 
 
 

@@ -72,6 +72,9 @@ class Card(Base):
 
         return result
 
+    def get_set(self):
+        return self.set
+
     def get_rules_text(self):
         return self.rules_text
 
@@ -86,5 +89,11 @@ class Card(Base):
 
     def get_toughness(self):
         return self.toughness
+
+    def get_image_filename(self):
+        if self.name:
+            return self.set + '_' + self.get_normalized_name()
+        else:
+            return self.set + '_' + self.get_normalized_name() + '90'
 
 
