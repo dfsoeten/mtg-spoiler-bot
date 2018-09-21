@@ -29,8 +29,12 @@ class Cache(Base):
         Base.__init__(self)
         self.spoiler = spoiler
         self.scraper = Scraper()
-        self.read_cache()
 
+        self.read_cache()
+        self.start()
+        self.write_cache()
+
+    def start(self):
         # Cache set & card data
         for set in self.scraper.get_sets():
 
@@ -39,13 +43,9 @@ class Cache(Base):
                 self.cache['sets'][set] = {}
 
             # Populate set models
-            self.spoiler.append_sets(Set(set))
-
-            set = self.spoiler.find_set(set)
-
-            # Check if set image exists, otherwise cache it
-            if not os.path.isfile(self.set_icons_path + set.get_name() + '.png'):
-                self.cache_set_images(set)
+            set = Set(set)
+            self.spoiler.append_set(set)
+            self.cache_set_images(set)
 
             for card in self.scraper.get_cards(set.get_name()):
                 # Check if card exists, otherwise cache it
@@ -55,27 +55,23 @@ class Cache(Base):
                     if not self.config['silent']:
                         print(colored('[CACHED][CARD] ' + self.scraper.get_card_name(card), 'blue'))
 
+                # Populate card models
                 card = Card(self.cache['sets'][set.get_name()][self.scraper.get_card_name(card)])
-                self.spoiler.find_set(set.get_name()).append_card(card)
+                set.append_card(card)
+                self.cache_card_images(card)
 
-                # Check if card image exists, otherwise cache it
-                if not os.path.isfile(self.cards_images_path + card.get_image_filename() + '.jpg'):
-                    self.cache_card_images(card)
-
-                break
-            break
-
-        self.write_cache()
-
+    # Check if there is a new set
     def has_new_set(self):
         if self.cache['sets'] == self.scraper.get_sets():
             return False
         else:
             return True
 
+    # Check if the cache has set
     def has_set(self, set_name):
         return set_name in self.cache['sets']
 
+    # Check if the cache has a card
     def has_card(self, set_name, card_name):
         return card_name in self.cache['sets'][set_name]
 
@@ -91,22 +87,21 @@ class Cache(Base):
 
     # Cache set images
     def cache_set_images(self, set):
-        # Save set icons to cache if it doesn't exist
-        open(self.set_icons_path + set.get_name() + '.png', 'wb') \
-            .write(requests.get(self.config['domain'] + '/' + set.get_name()).content)
+        # Check if set image exists, otherwise cache it
+        if not os.path.isfile(self.set_icons_path + set.get_name() + '.png'):
+            open(self.set_icons_path + set.get_name() + '.png', 'wb') \
+                .write(requests.get(self.config['domain'] + '/' + set.get_name()).content)
 
-        if not self.config['silent']:
-            print(colored('[CACHED][IMAGE] ' + set.get_name(), 'blue'))
+            if not self.config['silent']:
+                print(colored('[CACHED][IMAGE] ' + set.get_name() + '.png', 'blue'))
 
     # Cache card images
     def cache_card_images(self, card):
-        open(self.cards_images_path + card.get_image_filename() + '.jpg', 'wb') \
-            .write(requests.get(
-                self.config['domain'] + '/' + card.get_set() + '/cards/' + card.get_normalized_name() + '.jpg').content)
+        # Check if card image exists, otherwise cache it
+        if not os.path.isfile(self.cards_images_path + card.get_image_filename() + '.jpg') and card.get_image_filename() != '':
+            open(self.cards_images_path + card.get_image_filename() + '.jpg', 'wb') \
+                .write(requests.get(
+                    self.config['domain'] + '/' + card.get_set() + '/cards/' + card.get_normalized_name() + '.jpg').content)
 
-        if not self.config['silent']:
-            print(colored('[CACHED][IMAGE] ' + card.get_image_filename() + '.jpg', 'blue'))
-
-
-
-
+            if not self.config['silent']:
+                print(colored('[CACHED][IMAGE] ' + card.get_image_filename() + '.jpg', 'blue'))

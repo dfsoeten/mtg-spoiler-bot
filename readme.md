@@ -1,5 +1,5 @@
 # MTG Spoiler Bot
-This nifty "little" python application will scrape the newest spoilers from [Mythic Spoiler](http://mythicspoiler.com/) 
+This nifty little python application will scrape the newest spoilers from [Mythic Spoiler](http://mythicspoiler.com/) 
 and caches the data into `.json` files. Card images will be saved too!
 
 In the future this application will be able to be linked with [Whatsapp web](https://web.whatsapp.com/) and automatically send the newest spoilers inside your playgroups groups app!
@@ -10,6 +10,8 @@ Run it with **python 3**: `pyton3 main.py`
 
 
 ## Options
+The following options can be changed in `config.json`, these options will impact how the application is ran.
+
 | Option           | Values    | Description                                                             |
 |------------------|-----------|-------------------------------------------------------------------------|
 | domain           | [url]     | Domain of mythicspoiler.com, probably don't wanna touch this            |
@@ -26,4 +28,5 @@ It can pretty print magic cards, for what it's worth..
 ## Todo
 - Link [Whatsapp web](https://web.whatsapp.com/) with selenium.
 - Check periodically for newest spoilers
-- Add `is_new()` method to cards 
+- Add `is_new()` method to cards
+- Generate acii card art from image to be used in pretty printing 

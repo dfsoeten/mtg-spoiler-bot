@@ -28,17 +28,18 @@ class Card(Base):
 
     def __init__(self, c):
         Base.__init__(self)
-        self.name = c['name']
-        self.manacost = c['manacost']
-        self.type = c['type']
-        self.sub_types = c['sub_types']
-        self.set = c['set']
-        self.rules_text = c['rules_text']
-        self.flavor = c['flavor']
-        self.artist = c['artist']
-        self.power = c['power']
-        self.toughness = c['toughness']
-        self.url = c['url']
+        if c:
+            self.name = c['name']
+            self.manacost = c['manacost']
+            self.type = c['type']
+            self.sub_types = c['sub_types']
+            self.set = c['set']
+            self.rules_text = c['rules_text']
+            self.flavor = c['flavor']
+            self.artist = c['artist']
+            self.power = c['power']
+            self.toughness = c['toughness']
+            self.url = c['url']
 
     def get_name(self):
         return self.name

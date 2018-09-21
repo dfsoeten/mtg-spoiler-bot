@@ -1,4 +1,5 @@
 import requests
+import traceback
 from bs4 import BeautifulSoup
 from termcolor import colored
 
@@ -75,8 +76,8 @@ class Scraper(Base):
                 'rules_text': card[3].text.strip(),
                 'flavor': card[4].text.strip(),
                 'artist': card[6].find('font').text.strip(),
-                'power': int(pwr_thg[0]) if len(pwr_thg) == 2 else None,
-                'toughness': int(pwr_thg[1]) if len(pwr_thg) == 2 else None,
+                'power': pwr_thg[0] if len(pwr_thg) == 2 else None,
+                'toughness': pwr_thg[1] if len(pwr_thg) == 2 else None,
                 'url': self.config['domain'] + '/' + set_name + '/' + card_name
             }
 
@@ -87,4 +88,4 @@ class Scraper(Base):
             if self.config['debug']['is-enabled']:
                 print(colored(e, 'red'))
 
-            return {}
+            return None

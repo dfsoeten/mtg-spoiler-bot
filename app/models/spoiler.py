@@ -15,7 +15,7 @@ class Spoiler(Base):
         self.sets = sets
 
     # Append set
-    def append_sets(self, set):
+    def append_set(self, set):
         self.sets.append(set)
 
     # Get sets
