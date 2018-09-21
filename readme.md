@@ -10,7 +10,7 @@ Run it with **python 3**: `pyton3 main.py`
 
 
 ## Options
-The following options can be changed in `config.json`, these options will impact how the application is ran.
+The following options can be changed in `config.json`, these options will impact how the application is run.
 
 | Option           | Values    | Description                                                             |
 |------------------|-----------|-------------------------------------------------------------------------|
