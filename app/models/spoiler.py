@@ -23,7 +23,7 @@ class Spoiler(Base):
         return self.sets
 
     # Get sets length
-    def get_sets_len(self):
+    def get_sets_length(self):
         return len(self.sets)
 
     # Get the latest set
