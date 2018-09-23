@@ -6,6 +6,7 @@ In the future this application will be able to be linked with [Whatsapp web](htt
 
 ## Getting Started
 Clone this repo: `git clone https://github.com/iamdann/mtg-spoiler-bot.git`<br/>
+Install dependencies `pip3 -r requirements.txt`<br/>
 Run it with **python 3**: `pyton3 main.py`
 
 
