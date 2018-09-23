@@ -6,7 +6,7 @@ class Set(Base):
     # Name
     name = ''
 
-    # Card
+    # Cards
     cards = []
 
     # Get sets from source
