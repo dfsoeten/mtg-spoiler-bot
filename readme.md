@@ -20,6 +20,9 @@ The following options can be changed in `config.json`, these options will impact
 | debug is-enabled | [boolean] | Turns on debug messages when an exception is thrown while scraping data |
 | debug card-index | [int]     | Index of the to debug card in a set                                     |
 
+## Testing
+You can run the avaiable unit test by executing `python3 test.py` in the root of this directory.
+
 ## Pretty Printing
 It can pretty print magic cards, for what it's worth..
 

@@ -1,4 +1,5 @@
 termcolor
+colour-runner
 requests==2.19.1
 selenium==3.14.0
 beautifulsoup4==4.6.1
