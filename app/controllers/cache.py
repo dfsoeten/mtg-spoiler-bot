@@ -60,13 +60,6 @@ class Cache(Base):
                 set.append_card(card)
                 self.cache_card_images(card)
 
-    # Check if there is a new set
-    def has_new_set(self):
-        if self.cache['sets'] == self.scraper.get_sets():
-            return False
-        else:
-            return True
-
     # Check if the cache has set
     def has_set(self, set_name):
         return set_name in self.cache['sets']
