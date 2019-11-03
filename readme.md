@@ -21,7 +21,7 @@ The following options can be changed in `config.json`, these options will impact
 | debug card-index | [int]     | Index of the to debug card in a set                                     |
 
 ## Testing
-You can run the avaiable unit test by executing `python3 test.py` in the root of this directory.
+You can run the avaiable unit test by executing `docker build . -t mtg-spoiler-bot && docker run -v $(pwd):/usr/src/app mtg-spoiler-bot python3 test.py` in the root of this directory.
 
 ## Pretty Printing
 It can pretty print magic cards, for what it's worth..
