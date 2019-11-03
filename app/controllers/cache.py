@@ -68,7 +68,7 @@ class Cache(Base):
 
     # Check if the cache has a card
     def has_card(self, set_name, card_name):
-        return card_name in self.cache['sets'][set_name]
+        return card_name in self.cache['sets'][set_name] if self.has_set(set_name) else False
 
     # Read cache
     def read_cache(self):
