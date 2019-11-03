@@ -5,9 +5,8 @@ and caches the data into `.json` files. Card images will be saved too!
 In the future this application will be able to be linked with [Whatsapp web](https://web.whatsapp.com/) and automatically send the newest spoilers inside your playgroups groups app!
 
 ## Getting Started
-Clone this repo: `git clone https://github.com/iamdann/mtg-spoiler-bot.git`<br/>
-Install dependencies `pip3 -r requirements.txt`<br/>
-Run it with **python 3**: `pyton3 main.py`
+1. Clone this repo: `git clone https://github.com/iamdann/mtg-spoiler-bot.git`<br/>
+2. Run it: `docker build . -t mtg-spoiler-bot && docker run -v $(pwd):/usr/src/app mtg-spoiler-bot`
 
 
 ## Options

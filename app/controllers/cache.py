@@ -1,4 +1,6 @@
 import os
+from shutil import copyfile
+
 import requests
 import json
 from termcolor import colored
@@ -70,6 +72,9 @@ class Cache(Base):
 
     # Read cache
     def read_cache(self):
+        if not os.path.isfile('app/cache/cache.json'):
+            copyfile('app/cache/cache.default.json', 'app/cache/cache.json')
+
         with open('app/cache/cache.json') as file:
             self.cache = json.load(file)
 
