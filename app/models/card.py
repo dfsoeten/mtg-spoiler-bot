@@ -28,7 +28,7 @@ class Card(Base):
 
     new = False
 
-    def __init__(self, c, new):
+    def __init__(self, c, new=False):
         Base.__init__(self)
         if c:
             self.name = c['name']

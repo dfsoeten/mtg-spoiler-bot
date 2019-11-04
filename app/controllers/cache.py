@@ -65,7 +65,7 @@ class Cache(Base):
                         print(colored('[FROM CACHE][CARD] ' + self.scraper.get_card_name(card_name), 'yellow'))
 
                 # Instantiate card model
-                card = Card(self.cache['sets'][set.get_name()][card_name], new_card)
+                card = Card(self.cache['sets'][set.get_name()][card_name], new=new_card)
                 set.append_card(card)
                 self.cache_card_images(card)
 
