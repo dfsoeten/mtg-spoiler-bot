@@ -104,7 +104,6 @@ class Card(Base):
     def set_new(self, new):
         self.new = new
 
-
     def is_new(self):
         return self.new
 

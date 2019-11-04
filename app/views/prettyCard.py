@@ -3,12 +3,11 @@ from termcolor import colored
 
 
 class PrettyCard:
-
     # Card object
     card = None
 
     # Card width
-    card_width = 36
+    card_width = 37
 
     # Output result
     output = ''
@@ -21,7 +20,9 @@ class PrettyCard:
         # Start card title
         self.fill('+', '-')
         if len(self.card.get_name() + self.card.get_manacost()) + 6 > self.card_width:
-            self.fill_justify('|', [self.card.get_name()[:(self.card_width - (len(self.card.get_manacost()) + 8))] + '..', self.card.get_manacost()])
+            self.fill_justify('|',
+                              [self.card.get_name()[:(self.card_width - (len(self.card.get_manacost()) + 8))] + '..',
+                               self.card.get_manacost()])
         else:
             self.fill_justify('|', [self.card.get_name(), self.card.get_manacost()])
         self.fill('|', '-')
@@ -51,7 +52,8 @@ class PrettyCard:
             pwr_tgh = str(self.card.get_power()) + '/' + str(self.card.get_toughness())
 
             if len(self.card.get_artist() + pwr_tgh) + 2 > self.card_width:
-                self.fill_justify('|', [self.card.get_artist()[:(self.card_width - (len(pwr_tgh) + 8))] + '..', pwr_tgh])
+                self.fill_justify('|',
+                                  [self.card.get_artist()[:(self.card_width - (len(pwr_tgh) + 8))] + '..', pwr_tgh])
             else:
                 self.fill_justify('|', [self.card.get_artist(), pwr_tgh])
         else:
@@ -81,10 +83,10 @@ class PrettyCard:
 
     def fill_space(self, amount):
         for i in range(1, amount):
-            self.output += ' '
+            self.output += " "
 
     def fill_justify(self, border, content):
-        self.output += border + ' '+ content[0]
+        self.output += border + ' ' + content[0]
         self.fill_space((self.card_width - (4 + len(content[0] + content[1]))))
         self.output += content[1] + ' ' + border + '\n'
 
@@ -100,6 +102,3 @@ class PrettyCard:
             self.output += content[:(self.card_width - 5)]
             self.output += ' ' + border + '\n'
             self.fill_remaining(border, content[(self.card_width - 5):])
-
-
-

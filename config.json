@@ -1,7 +1,7 @@
 {
   "domain": "http://mythicspoiler.com",
   "new-sets-url": "/newspoilers.html",
-
+  "telegram-channel-id": "mtg_spoilers",
   "silent": true,
   "debug": {
     "is-enabled": true,
