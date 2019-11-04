@@ -38,29 +38,38 @@ class Cache(Base):
 
     def start(self):
         # Cache set & card data
-        for set in self.scraper.get_sets():
+        for set_name in self.scraper.get_sets():
+
+            # Instantiate set models
+            set = Set(set_name)
 
             # Check if set exists, otherwise cache it
-            if not self.has_set(set):
-                self.cache['sets'][set] = {}
+            if not self.has_set(set_name):
+                self.cache['sets'][set_name] = {}
+                self.cache_set_images(set)
 
-            # Populate set models
-            set = Set(set)
-            self.spoiler.append_set(set)
-            self.cache_set_images(set)
+            for card_url in self.scraper.get_card_urls(set.get_name()):
+                card_name = self.scraper.get_card_name(card_url)
+                new_card = True
 
-            for card in self.scraper.get_cards(set.get_name()):
                 # Check if card exists, otherwise cache it
-                if not self.has_card(set.get_name(), self.scraper.get_card_name(card)):
-                    self.cache['sets'][set.get_name()][self.scraper.get_card_name(card)] = self.scraper.get_card(set.get_name(), card)
+                if not self.has_card(set.get_name(), card_name):
+                    self.cache['sets'][set.get_name()][self.scraper.get_card_name(card_url)] = self.scraper.get_card(set.get_name(), card_url)
 
                     if not self.config['silent']:
-                        print(colored('[CACHED][CARD] ' + self.scraper.get_card_name(card), 'blue'))
+                        print(colored('[CACHED][CARD] ' + self.scraper.get_card_name(card_name), 'blue'))
+                else:
+                    new_card = False
 
-                # Populate card models
-                card = Card(self.cache['sets'][set.get_name()][self.scraper.get_card_name(card)])
+                    if not self.config['silent']:
+                        print(colored('[FROM CACHE][CARD] ' + self.scraper.get_card_name(card_name), 'yellow'))
+
+                # Instantiate card model
+                card = Card(self.cache['sets'][set.get_name()][card_name], new_card)
                 set.append_card(card)
                 self.cache_card_images(card)
+
+            self.spoiler.append_set(set)
 
     # Check if the cache has set
     def has_set(self, set_name):
@@ -103,3 +112,7 @@ class Cache(Base):
 
             if not self.config['silent']:
                 print(colored('[CACHED][IMAGE] ' + card.get_image_filename() + '.jpg', 'blue'))
+
+    # Return all new cards in the spoiler model
+    def get_new_spoilers(self):
+        return self.spoiler

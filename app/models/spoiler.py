@@ -38,6 +38,15 @@ class Spoiler(Base):
 
         return False
 
+    # Get all new cards
+    def get_new_cards(self):
+        cards = []
+
+        for set in self.sets:
+            cards += set.get_new_cards()
+
+        return cards
+
 
 
 

@@ -30,26 +30,26 @@ class Scraper(Base):
 
         return sets
 
-    def get_cards(self, set_name):
+    def get_card_urls(self, set_name):
         if not self.config['silent']:
             print(colored('[GET][SET] ' + set_name, 'green'))
 
         soup = BeautifulSoup(requests.get(self.config['domain'] + '/' + set_name).text, 'lxml')
-        cards = []
+        card_urls = []
 
         for card in soup.findAll('a', 'card'):
-            cards.append(card['href'])
+            card_urls.append(card['href'])
 
-        return cards
+        return card_urls
 
-    def get_card(self, set_name, card_name):
+    def get_card(self, set_name, card_url):
 
         if not self.config['silent']:
-            print(colored('[GET][CARD] ' + self.get_card_name(card_name), 'green'))
+            print(colored('[GET][CARD] ' + self.get_card_name(card_url), 'green'))
 
         # Get card data
         try:
-            page = BeautifulSoup(requests.get(self.config['domain'] + '/' + set_name + '/' + card_name).text, 'lxml')
+            page = BeautifulSoup(requests.get(self.config['domain'] + '/' + set_name + '/' + card_url).text, 'lxml')
             card = page \
                 .find('table',
                       attrs={'valign': 'top', 'cellspacing': 0, 'cellpadding': 5, 'border': 0, 'align': 'center'}) \
@@ -57,7 +57,7 @@ class Scraper(Base):
 
         except Exception as e:
             if not self.config['silent']:
-                print(colored('[ERROR] Could not get card data from ' + self.config['domain'] + '/' + set_name + '/' + card_name, 'red'))
+                print(colored('[ERROR] Could not get card data from ' + self.config['domain'] + '/' + set_name + '/' + card_url, 'red'))
 
             if self.config['debug']['is-enabled']:
                 print(colored(e, 'red'))
@@ -78,12 +78,12 @@ class Scraper(Base):
                 'artist': card[6].find('font').text.strip(),
                 'power': pwr_thg[0] if len(pwr_thg) == 2 else None,
                 'toughness': pwr_thg[1] if len(pwr_thg) == 2 else None,
-                'url': self.config['domain'] + '/' + set_name + '/' + card_name
+                'url': self.config['domain'] + '/' + set_name + '/' + card_url
             }
 
         except Exception as e:
             if not self.config['silent']:
-                print(colored('[ERROR] Could not parse card data from ' + self.config['domain'] + '/' + set_name + '/' + card_name, 'red'))
+                print(colored('[ERROR] Could not parse card data from ' + self.config['domain'] + '/' + set_name + '/' + card_url, 'red'))
 
             if self.config['debug']['is-enabled']:
                 print(colored(e, 'red'))

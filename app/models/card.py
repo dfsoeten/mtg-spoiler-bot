@@ -26,7 +26,9 @@ class Card(Base):
 
     url = ''
 
-    def __init__(self, c):
+    new = False
+
+    def __init__(self, c, new):
         Base.__init__(self)
         if c:
             self.name = c['name']
@@ -40,6 +42,8 @@ class Card(Base):
             self.power = c['power']
             self.toughness = c['toughness']
             self.url = c['url']
+
+        self.new = new
 
     def get_name(self):
         return self.name
@@ -96,5 +100,12 @@ class Card(Base):
             return self.set + '_' + self.get_normalized_name()
         else:
             return self.set + '_' + self.get_normalized_name() + '90'
+
+    def set_new(self, new):
+        self.new = new
+
+
+    def is_new(self):
+        return self.new
 
 

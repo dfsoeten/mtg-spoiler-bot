@@ -13,6 +13,7 @@ class Set(Base):
     def __init__(self, name):
         Base.__init__(self)
         self.name = name
+        self.cards = []
 
     # Set cards
     def set_cards(self, cards):
@@ -45,3 +46,13 @@ class Set(Base):
                 return card
 
         return False
+
+    # Get new cards
+    def get_new_cards(self):
+        cards = []
+
+        for card in self.cards:
+            if card.is_new():
+                cards.append(card)
+
+        return cards
