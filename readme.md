@@ -31,3 +31,6 @@ It can pretty print magic cards, for what it's worth..
 ## Todo
 - Check periodically for newest spoilers
 - Add `is_new()` method to cards 
+
+<sub><sup>Yoinking Container
+`docker pull docker.pkg.github.com/dfsoeten/mtg-spoiler-bot/mtg-spoiler-bot:latest`</sup></sub>
