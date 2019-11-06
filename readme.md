@@ -5,12 +5,14 @@ and caches the data into `.json` files. Card images will be saved too!
 In the future this application will be able to be linked with ~~Whatsapp~~ Telegram and automatically send the newest spoilers inside your playgroups groups app!
 
 ## Getting Started
-1. Clone this repo: `git clone https://github.com/iamdann/mtg-spoiler-bot.git`<br/>
-2. Get a API key [here](https://telegram.me/botfather).
-4. Copy your `API_TOKEN` into the `.env` file.
-3. Run it: `docker build . -t mtg-spoiler-bot && docker run -v $(pwd):/usr/src/app mtg-spoiler-bot`
+1. Get a API key [here](https://telegram.me/botfather).
+2. Run:
+```
+docker run -e API_TOKEN=<YOUR-API-TOKEN> \
+  -v $(pwd)/mtg-spoiler-bot-cache:/usr/src/app/app/cache \
+  docker.pkg.github.com/dfsoeten/mtg-spoiler-bot/mtg-spoiler-bot:latest
+```
 
-Or just do this: `docker run -e API_TOKEN=<your token> -v $(pwd):/usr/src/app docker.pkg.github.com/dfsoeten/mtg-spoiler-bot/mtg-spoiler-bot:latest`
 
 ## Options
 The following options can be changed in `config.json`, these options will impact how the application is run.
