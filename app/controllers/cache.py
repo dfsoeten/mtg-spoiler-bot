@@ -81,8 +81,15 @@ class Cache(Base):
 
     # Read cache
     def read_cache(self):
-        if not os.path.isfile('app/cache/cache.json'):
-            copyfile('app/cache/cache.default.json', 'app/cache/cache.json')
+        if not os.path.isdir('app/cache'):
+            os.mkdir('app/cache')
+        if not os.path.isdir('app/cache/card_images'):
+            os.mkdir('app/cache/card_images')
+        if not os.path.isdir('app/cache/set_images'):
+            os.mkdir('app/cache/set_images')
+
+        if not os.path.isfile('app/cache.json'):
+            copyfile('app/cache.default.json', 'app/cache/cache.json')
 
         with open('app/cache/cache.json') as file:
             self.cache = json.load(file)

@@ -6,8 +6,11 @@ In the future this application will be able to be linked with ~~Whatsapp~~ Teleg
 
 ## Getting Started
 1. Clone this repo: `git clone https://github.com/iamdann/mtg-spoiler-bot.git`<br/>
-2. Run it: `docker build . -t mtg-spoiler-bot && docker run -v $(pwd):/usr/src/app mtg-spoiler-bot`
+2. Get a API key [here](https://telegram.me/botfather).
+4. Copy your `API_TOKEN` into the `.env` file.
+3. Run it: `docker build . -t mtg-spoiler-bot && docker run -v $(pwd):/usr/src/app mtg-spoiler-bot`
 
+Or just do this: `docker run -e API_TOKEN=<your token> -v $(pwd):/usr/src/app docker.pkg.github.com/dfsoeten/mtg-spoiler-bot/mtg-spoiler-bot:latest`
 
 ## Options
 The following options can be changed in `config.json`, these options will impact how the application is run.
@@ -27,10 +30,3 @@ You can run the avaiable unit test by executing `docker build . -t mtg-spoiler-b
 It can pretty print magic cards, for what it's worth..
 
 ![pretty print example](pretty-print-example.jpeg)
-
-## Todo
-- Check periodically for newest spoilers
-- Add `is_new()` method to cards 
-
-<sub><sup>Yoinking Container
-`docker pull docker.pkg.github.com/dfsoeten/mtg-spoiler-bot/mtg-spoiler-bot:latest`</sup></sub>
