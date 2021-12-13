@@ -3,6 +3,6 @@ colour-runner
 requests==2.20.0
 selenium==3.14.0
 beautifulsoup4==4.6.1
-lxml==4.6.3
+lxml==4.6.5
 python-dotenv==0.10.3
 python-telegram-bot==12.2.0
